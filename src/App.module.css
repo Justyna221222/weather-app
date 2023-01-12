@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@300;400&display=swap');
+* {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.header {
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+}
+.enteredTown {
+    margin: 30px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #DBCEDF;
+}
+input {
+    margin: 20px;
+    height: 30px;
+    width: 200px;
+    font-size: 18px;
+    border-radius: 5px;
+}
+button {
+    width: 200px;
+    padding: 5px 10px;
+    font-size: 17px;
+    background-color: #ae2860;
+    border: 2px solid black;
+    border-radius: 5px;
+    color: white;
+
+}
+button:hover {
+    background-color: #d04c83;
+    cursor: pointer;
+}
+.output {
+    margin: 30px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #E5DAE8;
+}
+
+.townAndTemperature {
+    display: flex;
+    flex-direction: row;
+}
+h1 {
+    font-family: 'Lobster', cursive;
+    color: #6b0451
+}
+h2 {
+    margin: 0 20px;
+    font-size: 40px;
+    color: rgb(172, 9, 9);
+    font-weight: bolder;
+}
+p {
+    font-size: 19px;
+    line-height: 28px;
+}
+.townAndImg {
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+span {
+    font-weight: bolder;
+}
+.error {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    font-size: 17px;
+    color:crimson;
+    font-weight: bolder;
+}
+.errorExample {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+@media only screen and (max-width: 800px) {
+    .header {
+        margin: 20px;
+        font-size: 27px;
+    }
+    .enteredTown {
+        margin: 20px;
+        padding: 15px;
+    }
+    .output {
+        flex-direction: column;
+        margin: 20px;
+        padding: 15px;
+    }
+    h2 {
+        margin: 0 5px;
+        font-size: 30px;
+    }
+    img {
+        width: 100px;
+        height: 100px;
+    }
+}
