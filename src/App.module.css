@@ -38,12 +38,11 @@ input {
 button {
     width: 200px;
     padding: 5px 10px;
-    font-size: 17px;
+    font-size: 15px;
     background-color: #ae2860;
     border: 2px solid black;
     border-radius: 5px;
     color: white;
-
 }
 button:hover {
     background-color: #d04c83;

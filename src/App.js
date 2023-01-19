@@ -4,6 +4,7 @@ import sun from './images/sun.png';
 import cloudy from './images/clouds.png';
 import sun_clouds from './images/sun_clouds.png';
 import sun_clouds2 from './images/sun_clouds2.png';
+import CurrentPosition from './CurrentPosition';
 
 function App() {
   const [town, setTown] = useState('');
@@ -15,16 +16,18 @@ function App() {
   const [wind, setWind] = useState('');
   const [outputIsVisible, setOutputVisible] = useState(false);
   const [error, setError] = useState(false);
+  const [errorLocation, setErrorLocation] = useState(false);
+  const [errorEmptyField, setErrorEmptyField] = useState(false);
 
   const setYourTown = (event) => {
     setTown(event.target.value);
   }
-
- async function checkWeather() {
+ async function checkWeatherFromLocation(latitude, longitude) {
+  console.log(latitude, longitude);
   try {
-   const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${town}&APPID=481beaf40cbafbd1b31349a31fead89e`, {mode: 'cors'})
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=481beaf40cbafbd1b31349a31fead89e`, {mode: 'cors'})
     const weatherData = await response.json();
-    const enteredTown = town;
+    const enteredTown = weatherData.name;
     setEnteredTown(enteredTown);
     const tempK = weatherData.main.temp;
     const tempC = Math.round(tempK - 273.15);
@@ -39,10 +42,44 @@ function App() {
     setWind(wind);
     setOutputVisible(true);
     setError(false);
+    setErrorLocation(false);
+
+
+
   } catch(err) {
-    setError(true);
+    setErrorLocation(true);
     setOutputVisible(false);
   }
+ }
+ async function checkWeather() {
+  if(town === '') {
+    setErrorEmptyField(true);
+    return;
+  } else {
+      try {
+          const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${town}&APPID=481beaf40cbafbd1b31349a31fead89e`, {mode: 'cors'})
+          const weatherData = await response.json();
+          const enteredTown = town;
+          setEnteredTown(enteredTown);
+          const tempK = weatherData.main.temp;
+          const tempC = Math.round(tempK - 273.15);
+          setTempC(tempC);
+          const clouds = weatherData.clouds.all;
+          setClouds(clouds);
+          const humidity = weatherData.main.humidity;
+          setHumidity(humidity);
+          const pressure = weatherData.main.pressure;
+          setPressure(pressure);
+          const wind = weatherData.wind.speed;
+          setWind(wind);
+          setOutputVisible(true);
+          setError(false);
+      } catch(err) {
+          setError(true);
+          setOutputVisible(false);
+      }   
+  }
+
  
   }  
 var imgSource = cloudy;
@@ -82,9 +119,25 @@ if(clouds < 20) {
         <p className={style.errorExample}>For example "Bielsko-Biała" we should write with "-".</p>
     </div>
       )
+  } else if(errorLocation) {
+    err = (
+      <div className={style.error}>
+      <p >Something went wrong. Please, try again later. </p>
+  </div>
+    )
+  } else if(errorEmptyField) {
+    err = (
+    <div className={style.error}>
+        <p>Insert your town.</p>
+    </div>  
+    )
   } else {
     err = '';
   }
+
+
+
+
   return (
     <div className="App">          
     <div className={style.header}><h1>Weather App</h1></div>
@@ -92,6 +145,7 @@ if(clouds < 20) {
         <label htmlFor='town'>Insert your town to check the weather:</label>
         <input type='text' id='town' onChange={setYourTown}/>
         <button onClick={checkWeather}>Check weather</button>
+        <CurrentPosition onCurrentLocation = {checkWeatherFromLocation}/>        
         <div>{err}</div>
       </div>
       {context}
